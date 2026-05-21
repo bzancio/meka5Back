@@ -18,6 +18,7 @@ repositories {
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
 	runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
