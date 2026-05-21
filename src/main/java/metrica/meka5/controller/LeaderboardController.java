@@ -31,18 +31,18 @@ public class LeaderboardController {
     @GetMapping("/level/{levelId}")
     public ResponseEntity<List<Leaderboard>> getByLevelId (@PathVariable Long levelId) {
         List<Leaderboard> response = leaderboardService.getLevelbyId(levelId);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response); // Cambiar
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/user/{levelId}")
     public ResponseEntity<List<Leaderboard>> getTop10ByLevelID (@PathVariable Long levelId) {
         List<Leaderboard> response = leaderboardService.getBestsLevelby(levelId);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response); // Cambiar
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/best")
     public ResponseEntity<List<Leaderboard>> getByLevelAndUser(  @RequestParam Long levelId, @RequestParam Long userId) {
         List<Leaderboard> response = leaderboardService.getByLevelAndUser(levelId,userId);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response); // Cambiar
+        return ResponseEntity.ok(response);
     }
 }
