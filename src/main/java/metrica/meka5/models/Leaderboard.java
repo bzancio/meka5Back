@@ -11,24 +11,24 @@ public class Leaderboard {
     private Long id;
 
     @Column(nullable = false)
-    private int puntuacion;
+    private int score;
 
     @Column(nullable = false)
-    private double tiempo;
+    private double time;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "usuario_id")
-    private Users user;
+    private User user;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "level_id")
-    private Levels level;
+    private Level level;
 
     public Leaderboard() {}
 
-    public Leaderboard(int puntuacion, double tiempo, Users user, Levels level) {
-        this.puntuacion = puntuacion;
-        this.tiempo = tiempo;
+    public Leaderboard(int puntuacion, double tiempo, User user, Level level) {
+        this.score = puntuacion;
+        this.time = tiempo;
         this.user = user;
         this.level = level;
     }
@@ -37,35 +37,35 @@ public class Leaderboard {
         return id;
     }
 
-    public int getPuntuacion() {
-        return puntuacion;
+    public int getScore() {
+        return score;
     }
 
-    public void setPuntuacion(int puntuacion) {
-        this.puntuacion = puntuacion;
+    public void setScore(int score) {
+        this.score = score;
     }
 
-    public double getTiempo() {
-        return tiempo;
+    public double getTime() {
+        return time;
     }
 
-    public void setTiempo(double tiempo) {
-        this.tiempo = tiempo;
+    public void setTime(double time) {
+        this.time = time;
     }
 
-    public Users getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(Users user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
-    public Levels getLevel() {
+    public Level getLevel() {
         return level;
     }
 
-    public void setLevel(Levels level) {
+    public void setLevel(Level level) {
         this.level = level;
     }
 }

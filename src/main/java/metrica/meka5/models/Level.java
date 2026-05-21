@@ -1,17 +1,34 @@
-package metrica.meka5.dto;
+package metrica.meka5.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
+import java.util.List;
+
+@Entity
+@Table(name = "levels")
 public class Level {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private boolean uppercase;
+
+    @Column(nullable = false)
     private boolean numbers;
+
+    @Column(nullable = false)
     private boolean punctuation;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "level")
+    private List<Leaderboard> leaderboard;
 
     public Level() {}
 
-    public Level(Long id, boolean uppercase, boolean numbers, boolean punctuation) {
-        this.id = id;
+    public Level(boolean uppercase, boolean numbers, boolean punctuation) {
         this.uppercase = uppercase;
         this.numbers = numbers;
         this.punctuation = punctuation;
@@ -19,10 +36,6 @@ public class Level {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public boolean isUppercase() {
@@ -47,5 +60,13 @@ public class Level {
 
     public void setPunctuation(boolean punctuation) {
         this.punctuation = punctuation;
+    }
+
+    public List<Leaderboard> getLeaderboard() {
+        return leaderboard;
+    }
+
+    public void setLeaderboard(List<Leaderboard> leaderboard) {
+        this.leaderboard = leaderboard;
     }
 }

@@ -36,27 +36,27 @@ public class LeaderboardServiceImpl implements LeaderboardService{
     @Override
     public List<Leaderboard> getLevelbyId(Long levelId) {
         if (!levelRepository.existsById(levelId)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El nivel no existe");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Level not found");
         }
-        return leaderboardRepository.findByLevel_IdOrderByPuntuacionDescTiempoAsc(levelId);
+        return leaderboardRepository.findByLevel_IdOrderByScoreDescTimeAsc(levelId);
     }
 
     @Override
     public List<Leaderboard> getBestsLevelby(Long levelId) {
         if (!levelRepository.existsById(levelId)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El nivel no existe");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Level not found");
         }
-        return leaderboardRepository.findTop10ByLevel_IdOrderByPuntuacionDescTiempoAsc(levelId);
+        return leaderboardRepository.findTop10ByLevel_IdOrderByScoreDescTimeAsc(levelId);
     }
 
     @Override
     public List<Leaderboard> getByLevelAndUser(Long levelId, Long userId) {
         if (!levelRepository.existsById(levelId)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El nivel no existe");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Level not found");
         }
         if (!userRepository.existsById(userId)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario no existe");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
         }
-        return leaderboardRepository.findByUser_IdAndLevel_IdOrderByPuntuacionDescTiempoAsc(userId,levelId);
+        return leaderboardRepository.findByUser_IdAndLevel_IdOrderByScoreDescTimeAsc(userId,levelId);
     }
 }

@@ -1,12 +1,13 @@
 package metrica.meka5.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
-@Table(name = "Usuarios")
-public class Users {
+@Table(name = "users")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,12 +19,13 @@ public class Users {
     @Column(nullable = false)
     private String passwordHash;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Leaderboard> leaderboard;
 
-    public Users() {}
+    public User() {}
 
-    public Users(String email, String passwordHash) {
+    public User(String email, String passwordHash) {
         this.email = email;
         this.passwordHash = passwordHash;
     }
