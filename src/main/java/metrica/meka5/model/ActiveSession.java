@@ -4,11 +4,11 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "active_sesion")
-public class ActiveSesion {
+@Table(name = "active_sessions")
+public class ActiveSession {
 
 	@Id
-	private String tokenSesion;
+	private String tokenSession;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
@@ -17,15 +17,15 @@ public class ActiveSesion {
 	@Column(nullable = false)
 	private LocalDateTime expirationDate;
 
-	public ActiveSesion() {
+	public ActiveSession() {
 	}
 
-	public String getTokenSesion() {
-		return tokenSesion;
+	public String getTokenSession() {
+		return tokenSession;
 	}
 
 	public void setTokenSesion(String tokenSesion) {
-		this.tokenSesion = tokenSesion;
+		this.tokenSession = tokenSesion;
 	}
 
 	public User getUser() {
