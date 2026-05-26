@@ -1,6 +1,6 @@
 package metrica.meka5.controller;
 
-import metrica.meka5.models.Level;
+import metrica.meka5.model.Level;
 import metrica.meka5.service.LevelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

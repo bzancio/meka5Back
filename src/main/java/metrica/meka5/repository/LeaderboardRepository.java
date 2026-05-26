@@ -1,8 +1,9 @@
 package metrica.meka5.repository;
 
-import metrica.meka5.models.Leaderboard;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import metrica.meka5.model.Leaderboard;
 
 import java.util.List;
 

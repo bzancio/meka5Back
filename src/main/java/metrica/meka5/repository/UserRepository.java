@@ -1,7 +1,7 @@
 package metrica.meka5.repository;
 
 import java.util.Optional;
-import metrica.meka5.models.User;
+import metrica.meka5.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

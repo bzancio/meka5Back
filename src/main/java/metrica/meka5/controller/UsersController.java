@@ -1,6 +1,6 @@
 package metrica.meka5.controller;
 
-import metrica.meka5.models.User;
+import metrica.meka5.model.User;
 import metrica.meka5.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

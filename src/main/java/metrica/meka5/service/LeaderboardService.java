@@ -1,7 +1,8 @@
 package metrica.meka5.service;
 
-import metrica.meka5.models.Leaderboard;
 import org.springframework.stereotype.Service;
+
+import metrica.meka5.model.Leaderboard;
 
 import java.util.List;
 

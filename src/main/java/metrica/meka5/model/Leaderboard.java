@@ -1,4 +1,4 @@
-package metrica.meka5.models;
+package metrica.meka5.model;
 
 import jakarta.persistence.*;
 

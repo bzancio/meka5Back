@@ -1,6 +1,6 @@
 package metrica.meka5.service;
 
-import metrica.meka5.models.User;
+import metrica.meka5.model.User;
 import metrica.meka5.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

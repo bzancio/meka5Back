@@ -1,6 +1,6 @@
 package metrica.meka5.service;
 
-import metrica.meka5.models.Leaderboard;
+import metrica.meka5.model.Leaderboard;
 import metrica.meka5.repository.LeaderboardRepository;
 import metrica.meka5.repository.LevelRepository;
 import metrica.meka5.repository.UserRepository;

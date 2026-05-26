@@ -1,6 +1,6 @@
 package metrica.meka5.service;
 
-import metrica.meka5.models.Level;
+import metrica.meka5.model.Level;
 import metrica.meka5.repository.LevelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
