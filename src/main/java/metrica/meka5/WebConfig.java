@@ -7,18 +7,17 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@EnableWebMvc
-public class CorsConfiguration {
-
+public class WebConfig {
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
-			public void addCorsMappings(CorsRegistry register) {
-				register.addMapping("/**")
-					.allowedOrigins("http://localhost:4200")
-					.allowedMethods("GET", "POST", "OPTIONS")
-					.allowedHeaders("*")
-					.allowCredentials(true);
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**")
+						.allowedOrigins("htpp://localhost:4200")
+						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+						.allowedHeaders("*")
+						.allowCredentials(true);
 			}
 		};
 	}
