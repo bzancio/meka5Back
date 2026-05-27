@@ -23,6 +23,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
 	runtimeOnly 'com.mysql:mysql-connector-j'
+	implementation 'org.springframework.security:spring-security-crypto'
 	implementation 'org.hibernate.validator:hibernate-validator:8.0.1.Final'
 	runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
