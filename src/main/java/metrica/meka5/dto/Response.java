@@ -2,29 +2,23 @@ package metrica.meka5.dto;
 
 public class Response {
 
-	private boolean ok;
-	private Data data;
+	private String quote;
+
+	public Response() {
+	}
 	
-	public Response(boolean ok, Data data) {
+	public Response(String quote) {
 		super();
-		this.ok = ok;
-		this.data = data;
+		this.quote = quote;
 	}
 
-	public boolean isOk() {
-		return ok;
+	public String getQuote() {
+		return quote;
 	}
 
-	public void setOk(boolean ok) {
-		this.ok = ok;
+	public void setQuote(String quote) {
+		this.quote = quote;
 	}
-
-	public Data getData() {
-		return data;
-	}
-
-	public void setData(Data data) {
-		this.data = data;
-	}	
+	
 	
 }
