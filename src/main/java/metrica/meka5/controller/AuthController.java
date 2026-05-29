@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import metrica.meka5.dto.LoginRequest;
 import metrica.meka5.dto.LoginResponse;
+import metrica.meka5.dto.ChangePasswordRequest; // Import the new DTO
 import metrica.meka5.model.ActiveSession;
 import metrica.meka5.model.User;
 import metrica.meka5.repository.ActiveSessionRepository;
@@ -113,4 +114,44 @@ public class AuthController {
 		return ResponseEntity.ok("{\"message\": \"Logout success\"}");
 	}
 
+	@PostMapping("/change-password")
+	public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest) {
+		if (changePasswordRequest.getCurrentUsername() == null || changePasswordRequest.getCurrentUsername().trim().isEmpty()) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\": \"Current username cannot be empty\"}");
+		}
+		if (changePasswordRequest.getCurrentPassword() == null || changePasswordRequest.getCurrentPassword().isEmpty()) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\": \"Current password cannot be empty\"}");
+		}
+		if (changePasswordRequest.getNewPassword() == null || changePasswordRequest.getNewPassword().isEmpty()) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\": \"New password cannot be empty\"}");
+		}
+
+		Optional<User> oUser = userRepository.findByUsername(changePasswordRequest.getCurrentUsername());
+		if (oUser.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"error\": \"User not found\"}");
+		}
+
+		User user = oUser.get();
+
+		if (!passwordEncoder.matches(changePasswordRequest.getCurrentPassword(), user.getPassword())) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("{\"error\": \"Invalid current password\"}");
+		}
+
+		if (changePasswordRequest.getNewUsername() != null && !changePasswordRequest.getNewUsername().trim().isEmpty() &&
+			!changePasswordRequest.getNewUsername().equals(user.getUsername())) {
+			
+			Optional<User> existingUserWithNewUsername = userRepository.findByUsername(changePasswordRequest.getNewUsername());
+			if (existingUserWithNewUsername.isPresent()) {
+				return ResponseEntity.status(HttpStatus.CONFLICT).body("{\"error\": \"New username is already in use\"}");
+			}
+			user.setUsername(changePasswordRequest.getNewUsername());
+		}
+
+		String newHashedPassword = passwordEncoder.encode(changePasswordRequest.getNewPassword());
+		user.setPassword(newHashedPassword);
+
+		userRepository.save(user);
+
+		return ResponseEntity.ok("{\"message\": \"Password and/or username updated successfully\"}");
+	}
 }
