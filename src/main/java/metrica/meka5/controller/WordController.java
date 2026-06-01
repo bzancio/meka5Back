@@ -26,8 +26,8 @@ public class WordController {
 	}
 	
     @GetMapping("/sentence")
-    public ResponseEntity<String> get100 () {
+    public ResponseEntity<String> getSentence () {
         String words = typingService.getSentence();
-        return ResponseEntity.status(HttpStatus.CREATED).body(words);
+        return ResponseEntity.status(HttpStatus.OK).body(words);
     }
 }

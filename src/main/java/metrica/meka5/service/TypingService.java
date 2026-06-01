@@ -8,21 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
-import metrica.meka5.dto.Response;
+import metrica.meka5.dto.SentenceKanyeResponse;
 import metrica.meka5.model.CommonWord;
 import metrica.meka5.repository.CommonWordRepository;
 
 @Service
 public class TypingService {
 	
+	private final RestClient restClient = RestClient.create("https://api.kanye.rest/");
+	
 	@Autowired
 	private CommonWordRepository commonWordRepository;
-	private final RestClient restClient;
 
-	
-	public TypingService() {
-		this.restClient = RestClient.create("https://api.kanye.rest/");
-	}
 	
 	public List<String> getRandomWordsPackage(int packageSize) {
 		List<CommonWord> commonWords = commonWordRepository.findRandomWords(packageSize);
@@ -34,7 +31,7 @@ public class TypingService {
 	public String getSentence() {
 		return restClient.get()
 				.retrieve()
-				.body(Response.class)
+				.body(SentenceKanyeResponse.class)
 				.getQuote();
 
 	}

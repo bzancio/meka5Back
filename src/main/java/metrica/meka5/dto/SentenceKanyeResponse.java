@@ -1,13 +1,13 @@
 package metrica.meka5.dto;
 
-public class Response {
+public class SentenceKanyeResponse {
 
 	private String quote;
 
-	public Response() {
+	public SentenceKanyeResponse() {
 	}
 	
-	public Response(String quote) {
+	public SentenceKanyeResponse(String quote) {
 		super();
 		this.quote = quote;
 	}
