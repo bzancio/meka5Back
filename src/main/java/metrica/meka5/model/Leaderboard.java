@@ -15,6 +15,9 @@ public class Leaderboard {
 
     @Column(nullable = false)
     private double time;
+    
+    @Column(nullable = false)
+    private double wpm;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "usuario_id")
@@ -53,7 +56,15 @@ public class Leaderboard {
         this.time = time;
     }
 
-    public User getUser() {
+    public double getWpm() {
+		return wpm;
+	}
+
+	public void setWpm(double wpm) {
+		this.wpm = wpm;
+	}
+
+	public User getUser() {
         return user;
     }
 
