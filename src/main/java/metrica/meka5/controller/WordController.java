@@ -25,16 +25,18 @@ public class WordController {
 	public ResponseEntity<List<String>> getCommonWords(
 			@RequestParam(name = "size", defaultValue = "15") int size,
 			@RequestParam(name = "includePunctuation", defaultValue = "true") boolean includePunctuation,
-			@RequestParam(name = "maintainCase", defaultValue = "true") boolean maintainCase) {
-		List<String> wordsPackage = typingService.getRandomWordsPackage(size, includePunctuation, maintainCase);
+			@RequestParam(name = "maintainCase", defaultValue = "true") boolean maintainCase,
+			@RequestParam(name = "removeDiacritics", defaultValue = "false") boolean removeDiacritics) {
+		List<String> wordsPackage = typingService.getRandomWordsPackage(size, includePunctuation, maintainCase, removeDiacritics);
 		return ResponseEntity.ok(wordsPackage);
 	}
 
 	@GetMapping("/sentence")
 	public ResponseEntity<List<String>> getSentence(
 			@RequestParam(name = "includePunctuation", defaultValue = "true") boolean includePunctuation,
-			@RequestParam(name = "maintainCase", defaultValue = "true") boolean maintainCase) {
-		String sentence = typingService.getSentence(includePunctuation, maintainCase);
+			@RequestParam(name = "maintainCase", defaultValue = "true") boolean maintainCase,
+			@RequestParam(name = "removeDiacritics", defaultValue = "false") boolean removeDiacritics) {
+		String sentence = typingService.getSentence(includePunctuation, maintainCase, removeDiacritics);
 		List<String> words = Arrays.asList(sentence.split(" "));
 		return ResponseEntity.status(HttpStatus.OK).body(words);
 	}
