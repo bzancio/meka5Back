@@ -22,14 +22,20 @@ public class WordController {
 	private TypingService typingService;
 
 	@GetMapping("/common")
-	public ResponseEntity<List<String>> getCommonWords(@RequestParam(name = "size", defaultValue = "15") int size) {
-		List<String> wordsPackage = typingService.getRandomWordsPackage(size);
+	public ResponseEntity<List<String>> getCommonWords(
+			@RequestParam(name = "size", defaultValue = "15") int size,
+			@RequestParam(name = "includePunctuation", defaultValue = "true") boolean includePunctuation,
+			@RequestParam(name = "maintainCase", defaultValue = "true") boolean maintainCase) {
+		List<String> wordsPackage = typingService.getRandomWordsPackage(size, includePunctuation, maintainCase);
 		return ResponseEntity.ok(wordsPackage);
 	}
 
 	@GetMapping("/sentence")
-	public ResponseEntity<List<String>> getSentence() {
-		List<String> sentence = Arrays.asList(typingService.getSentence().split(" "));
-		return ResponseEntity.status(HttpStatus.OK).body(sentence);
+	public ResponseEntity<List<String>> getSentence(
+			@RequestParam(name = "includePunctuation", defaultValue = "true") boolean includePunctuation,
+			@RequestParam(name = "maintainCase", defaultValue = "true") boolean maintainCase) {
+		String sentence = typingService.getSentence(includePunctuation, maintainCase);
+		List<String> words = Arrays.asList(sentence.split(" "));
+		return ResponseEntity.status(HttpStatus.OK).body(words);
 	}
 }
