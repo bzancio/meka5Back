@@ -29,9 +29,10 @@ public class Leaderboard {
 
     public Leaderboard() {}
 
-    public Leaderboard(int puntuacion, double tiempo, User user, Level level) {
-        this.score = puntuacion;
-        this.time = tiempo;
+    public Leaderboard(int score, double time, double wpm,  User user, Level level) {
+        this.score = score;
+        this.time = time;
+        this.wpm = wpm;
         this.user = user;
         this.level = level;
     }

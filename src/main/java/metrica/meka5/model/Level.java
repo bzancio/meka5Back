@@ -17,9 +17,6 @@ public class Level {
     private boolean uppercase;
 
     @Column(nullable = false)
-    private boolean numbers;
-
-    @Column(nullable = false)
     private boolean punctuation;
 
     @JsonIgnore
@@ -28,9 +25,8 @@ public class Level {
 
     public Level() {}
 
-    public Level(boolean uppercase, boolean numbers, boolean punctuation) {
+    public Level(boolean uppercase, boolean punctuation) {
         this.uppercase = uppercase;
-        this.numbers = numbers;
         this.punctuation = punctuation;
     }
 
@@ -44,14 +40,6 @@ public class Level {
 
     public void setUppercase(boolean uppercase) {
         this.uppercase = uppercase;
-    }
-
-    public boolean isNumbers() {
-        return numbers;
-    }
-
-    public void setNumbers(boolean numbers) {
-        this.numbers = numbers;
     }
 
     public boolean isPunctuation() {
