@@ -84,8 +84,7 @@ public class LeaderboardServiceImpl implements LeaderboardService{
 	@Transactional
 	public Leaderboard saveScore(LeaderboardResponse leaderboardResponse) {
 		
-		ActiveSession sesion = activeSessionRepository.findByTokenSession(leaderboardResponse.getToken()).orElseThrow(() -> new RuntimeException("Sesion no valida o expirada"));
-		User usuario = sesion.getUser();
+		User usuario = activeSessionRepository.findByTokenSession(leaderboardResponse.getToken()).orElseThrow(() -> new RuntimeException("Sesion no valida o expirada"));
 		Level level = levelRepository.findByUppercaseAndPunctuation(leaderboardResponse.isUppercase(), leaderboardResponse.isPunctuation()).orElseThrow(() -> new RuntimeException("El nivel no existe"));
 
 		Leaderboard leaderboard = new Leaderboard(leaderboardResponse.getScore(), leaderboardResponse.getTime(), leaderboardResponse.getWpm(), usuario, level);
