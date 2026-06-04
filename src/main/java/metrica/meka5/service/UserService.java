@@ -8,5 +8,6 @@ import java.util.List;
 @Service
 public interface UserService {
     List<User> getUsers();
+    User getUser(String token);
     boolean UserIdExists(long userId);
 }

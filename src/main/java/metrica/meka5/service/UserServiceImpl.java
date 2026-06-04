@@ -22,4 +22,9 @@ public class UserServiceImpl implements UserService{
     public boolean UserIdExists(long userId) {
         return userRepository.existsById(userId);
     }
+
+	@Override
+	public User getUser(String token) {
+		return userRepository.findByToken(token).orElseThrow(() -> new RuntimeException("Token no valido"));
+	}
 }

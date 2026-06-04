@@ -1,5 +1,6 @@
 package metrica.meka5.service;
 
+import metrica.meka5.dto.LeaderboardRequest;
 import metrica.meka5.dto.LeaderboardResponse;
 import metrica.meka5.model.ActiveSession;
 import metrica.meka5.model.Leaderboard;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class LeaderboardServiceImpl implements LeaderboardService{
@@ -33,8 +35,17 @@ public class LeaderboardServiceImpl implements LeaderboardService{
     private ActiveSessionRepository activeSessionRepository;
 
     @Override
-    public List<Leaderboard> getScoreboard() {
-        return leaderboardRepository.findAll();
+    public List<LeaderboardRequest> getScoreboard() {
+        List<Leaderboard> leaderboard = leaderboardRepository.findAll();
+        return leaderboard.stream()
+        		.map(l -> new LeaderboardRequest(
+        				l.getUser().getUsername(), 
+        				l.getScore(), 
+        				l.getTime(), 
+        				l.getWpm(), 
+        				l.getLevel().isUppercase(), 
+        				l.getLevel().isPunctuation()))
+        		.collect(Collectors.toList());
     }
 
     @Override
