@@ -6,10 +6,11 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import metrica.meka5.model.ActiveSession;
+import metrica.meka5.model.User;
 
 @Repository
 public interface ActiveSessionRepository extends JpaRepository<ActiveSession, Long> {
 	Optional<ActiveSession> findByTokenSessionAndExpirationDateAfter(String tokenSession, LocalDateTime now);
-	Optional<ActiveSession> findByTokenSession(String tokenSession);
+	Optional<User> findByTokenSession(String tokenSession);
 	void deleteByExpirationDateBefore(LocalDateTime dateTime);
 }

@@ -1,6 +1,7 @@
 package metrica.meka5.service;
 
 import metrica.meka5.model.User;
+import metrica.meka5.repository.ActiveSessionRepository;
 import metrica.meka5.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,8 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ActiveSessionRepository activeSessionRepository;
 
     @Override
     public List<User> getUsers() {
@@ -25,6 +28,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public User getUser(String token) {
-		return userRepository.findByToken(token).orElseThrow(() -> new RuntimeException("Token no valido"));
+		User user = activeSessionRepository.findByTokenSession(token).orElseThrow(() -> new RuntimeException("Sesion no valida o expirada"));
+		return user;
 	}
 }
