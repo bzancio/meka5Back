@@ -2,6 +2,7 @@ package metrica.meka5.service;
 
 import org.springframework.stereotype.Service;
 
+import metrica.meka5.dto.LeaderboardResponse;
 import metrica.meka5.model.Leaderboard;
 
 import java.util.List;
@@ -13,4 +14,5 @@ public interface LeaderboardService{
     List<Leaderboard> getLevelbyId(Long levelId);
     List<Leaderboard> getBestsLevelby(Long levelId);
     List<Leaderboard> getByLevelAndUser(Long levelId, Long userId);
+    Leaderboard saveScore(LeaderboardResponse leaderboardResponse);
 }

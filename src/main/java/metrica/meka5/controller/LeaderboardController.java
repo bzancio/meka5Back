@@ -3,7 +3,6 @@ package metrica.meka5.controller;
 import metrica.meka5.model.Leaderboard;
 import metrica.meka5.service.LeaderboardService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,12 +19,6 @@ public class LeaderboardController {
     public ResponseEntity<List<Leaderboard>> getAll () {
         List<Leaderboard> response = leaderboardService.getScoreboard();
         return ResponseEntity.ok(response);
-    }
-
-    @PostMapping()
-    public ResponseEntity<Leaderboard> create(@RequestBody Leaderboard leaderboard) {
-        Leaderboard saved = leaderboardService.saveScoreboard(leaderboard);
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
     @GetMapping("/level/{levelId}")

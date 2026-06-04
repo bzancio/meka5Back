@@ -1,12 +1,18 @@
 package metrica.meka5.service;
 
+import metrica.meka5.dto.LeaderboardResponse;
+import metrica.meka5.model.ActiveSession;
 import metrica.meka5.model.Leaderboard;
+import metrica.meka5.model.Level;
+import metrica.meka5.model.User;
+import metrica.meka5.repository.ActiveSessionRepository;
 import metrica.meka5.repository.LeaderboardRepository;
 import metrica.meka5.repository.LevelRepository;
 import metrica.meka5.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -22,6 +28,9 @@ public class LeaderboardServiceImpl implements LeaderboardService{
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private ActiveSessionRepository activeSessionRepository;
 
     @Override
     public List<Leaderboard> getScoreboard() {
@@ -59,4 +68,16 @@ public class LeaderboardServiceImpl implements LeaderboardService{
         }
         return leaderboardRepository.findByUser_IdAndLevel_IdOrderByScoreDescTimeAsc(userId,levelId);
     }
+
+	@Override
+	@Transactional
+	public Leaderboard saveScore(LeaderboardResponse leaderboardResponse) {
+		
+		ActiveSession sesion = activeSessionRepository.findByTokenSession(leaderboardResponse.getToken()).orElseThrow(() -> new RuntimeException("Sesion no valida o expirada"));
+		User usuario = sesion.getUser();
+		Level level = levelRepository.findByUppercaseAndPunctuation(leaderboardResponse.isUppercase(), leaderboardResponse.isPunctuation()).orElseThrow(() -> new RuntimeException("El nivel no existe"));
+
+		Leaderboard leaderboard = new Leaderboard(leaderboardResponse.getScore(), leaderboardResponse.getTime(), leaderboardResponse.getWpm(), usuario, level);
+		return leaderboardRepository.save(leaderboard);
+	}
 }
