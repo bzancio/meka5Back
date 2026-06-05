@@ -42,7 +42,7 @@ public class LeaderboardController {
         return ResponseEntity.ok(response);
     }
     
-    @GetMapping("/register")
+    @PostMapping("/register")
     public ResponseEntity<Leaderboard> registerScore(@RequestParam LeaderboardResponse leaderboarResponse) {
         Leaderboard response = leaderboardService.saveScore(leaderboarResponse);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
