@@ -29,6 +29,6 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public Optional<User> getUser(String token) {
-		return activeSessionRepository.findByTokenSession(token);
+		return activeSessionRepository.findUserByTokenSession(token);
 	}
 }
