@@ -1,8 +1,6 @@
 package metrica.meka5.service;
 
-import java.text.Normalizer;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.regex.Pattern;
 
@@ -22,36 +20,32 @@ public class TypingService {
 	@Autowired
 	private CommonWordRepository commonWordRepository;
 
-    private static final Pattern PUNCTUATION_PATTERN = Pattern.compile("\\p{Punct}");
-    private static final Pattern DIACRITIC_PATTERN = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+    private static final Pattern PUNCTUATION_PATTERN = Pattern.compile("[\\p{Punct}]");
 
-	public List<String> getRandomWordsPackage(int packageSize, boolean includePunctuation, boolean maintainCase, boolean removeDiacritics) {
+	public List<String> getRandomWordsPackage(int packageSize, boolean maintainCase, boolean cleanPunctuationAndDiacritics) {
 		List<CommonWord> commonWords = commonWordRepository.findRandomWords(packageSize);
 		return commonWords.stream()
 				.map(CommonWord::getWord)
-				.map(word -> transformWord(word, includePunctuation, maintainCase, removeDiacritics))
+				.map(word -> transformWord(word, maintainCase, cleanPunctuationAndDiacritics))
 				.collect(Collectors.toList());
 	}
 	
-	public String getSentence(boolean includePunctuation, boolean maintainCase, boolean removeDiacritics) {
-		String quote = Objects.requireNonNull(restClient.get()
-                        .retrieve()
-                        .body(SentenceKanyeResponse.class))
+	public String getSentence(boolean maintainCase, boolean cleanPunctuationAndDiacritics) {
+		String quote = restClient.get()
+				.retrieve()
+				.body(SentenceKanyeResponse.class)
 				.getQuote();
-		return transformWord(quote, includePunctuation, maintainCase, removeDiacritics);
+		return transformWord(quote, maintainCase, cleanPunctuationAndDiacritics);
 	}
 
-    private String transformWord(String text, boolean includePunctuation, boolean maintainCase, boolean removeDiacritics) {
+    private String transformWord(String text, boolean maintainCase, boolean cleanPunctuationAndDiacritics) {
         if (text == null) {
             return "";
         }
         String transformedText = text;
 
-        if (removeDiacritics) {
+        if (cleanPunctuationAndDiacritics) {
             transformedText = removeDiacritics(transformedText);
-        }
-
-        if (!includePunctuation) {
             transformedText = PUNCTUATION_PATTERN.matcher(transformedText).replaceAll("");
         }
 
@@ -62,7 +56,23 @@ public class TypingService {
     }
 
     private String removeDiacritics(String text) {
-        String normalized = Normalizer.normalize(text, Normalizer.Form.NFD);
-        return DIACRITIC_PATTERN.matcher(normalized).replaceAll("");
+        if (text == null) {
+            return null;
+        }
+        StringBuilder sb = new StringBuilder(text.length());
+        for (char c : text.toCharArray()) {
+            switch (c) {
+                case 'á': case 'Á': sb.append('a'); break;
+                case 'é': case 'É': sb.append('e'); break;
+                case 'í': case 'Í': sb.append('i'); break;
+                case 'ó': case 'Ó': sb.append('o'); break;
+                case 'ú': case 'Ú': sb.append('u'); break;
+                case 'ü': case 'Ü': sb.append('u'); break;
+                case 'ñ': case 'Ñ': sb.append('n'); break;
+                case 'ç': case 'Ç': sb.append('c'); break;
+                default: sb.append(c); break;
+            }
+        }
+        return sb.toString();
     }
 }
