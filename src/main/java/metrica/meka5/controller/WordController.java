@@ -23,19 +23,17 @@ public class WordController {
 	@GetMapping("/common")
 	public ResponseEntity<List<String>> getCommonWords(
 			@RequestParam(name = "size", defaultValue = "15") int size,
-			@RequestParam(name = "includePunctuation", defaultValue = "true") boolean includePunctuation,
 			@RequestParam(name = "maintainCase", defaultValue = "true") boolean maintainCase,
-			@RequestParam(name = "removeDiacritics", defaultValue = "false") boolean removeDiacritics) {
-		List<String> wordsPackage = typingService.getRandomWordsPackage(size, includePunctuation, maintainCase, removeDiacritics);
+			@RequestParam(name = "cleanPunctuationAndDiacritics", defaultValue = "false") boolean cleanPunctuationAndDiacritics) {
+		List<String> wordsPackage = typingService.getRandomWordsPackage(size, maintainCase, cleanPunctuationAndDiacritics);
 		return ResponseEntity.ok(wordsPackage);
 	}
 
 	@GetMapping("/sentence")
 	public ResponseEntity<List<String>> getSentence(
-			@RequestParam(name = "includePunctuation", defaultValue = "true") boolean includePunctuation,
 			@RequestParam(name = "maintainCase", defaultValue = "true") boolean maintainCase,
-			@RequestParam(name = "removeDiacritics", defaultValue = "false") boolean removeDiacritics) {
-		String sentence = typingService.getSentence(includePunctuation, maintainCase, removeDiacritics);
+			@RequestParam(name = "cleanPunctuationAndDiacritics", defaultValue = "false") boolean cleanPunctuationAndDiacritics) {
+		String sentence = typingService.getSentence(maintainCase, cleanPunctuationAndDiacritics);
 		List<String> words = Arrays.asList(sentence.split(" "));
 		return ResponseEntity.status(HttpStatus.OK).body(words);
 	}
