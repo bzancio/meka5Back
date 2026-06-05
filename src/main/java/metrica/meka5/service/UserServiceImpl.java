@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -27,8 +28,7 @@ public class UserServiceImpl implements UserService{
     }
 
 	@Override
-	public User getUser(String token) {
-		User user = activeSessionRepository.findByTokenSession(token).orElseThrow(() -> new RuntimeException("Sesion no valida o expirada"));
-		return user;
+	public Optional<User> getUser(String token) {
+		return activeSessionRepository.findByTokenSession(token);
 	}
 }
