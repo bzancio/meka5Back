@@ -25,7 +25,7 @@ public class UsersController {
     }
     
     @GetMapping("/user")
-    public ResponseEntity<String> getNameByToken (@RequestParam String token) {
+    public ResponseEntity<String> getNameByToken (@RequestParam("token") String token) {
         User response = userService.getUser(token);
         return ResponseEntity.ok(response.getUsername());
     }
