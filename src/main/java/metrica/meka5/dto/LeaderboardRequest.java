@@ -12,12 +12,15 @@ public class LeaderboardRequest {
 	public LeaderboardRequest(String username, int score, double time, double wpm, boolean uppercase,
 			boolean punctuation) {
 		super();
-		Username = username;
+		this.Username = username;
 		this.score = score;
 		this.time = time;
 		this.wpm = wpm;
 		this.uppercase = uppercase;
 		this.punctuation = punctuation;
+	}
+	public LeaderboardRequest() {
+		super();
 	}
 	public String getUsername() {
 		return Username;
