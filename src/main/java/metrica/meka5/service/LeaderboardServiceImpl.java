@@ -45,6 +45,10 @@ public class LeaderboardServiceImpl implements LeaderboardService{
         				l.getWpm(), 
         				l.getLevel().isUppercase(), 
         				l.getLevel().isPunctuation()))
+        		.sorted((l1,l2) -> Double.compare(
+        				((l2.getScore()+l2.getWpm())/2),
+        				((l1.getScore()+l1.getWpm())/2)))
+        		.limit(50)
         		.collect(Collectors.toList());
     }
 

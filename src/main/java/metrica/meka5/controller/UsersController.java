@@ -33,7 +33,7 @@ public class UsersController {
         if(response.isPresent()) {
         	return ResponseEntity.ok(response.get().getUsername());
         }else {
-        	return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("mensaje","Sesion no valida o expirada"));
+        	return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("mensaje","Sesion no valida o expirada"));
         }
     }
 }
