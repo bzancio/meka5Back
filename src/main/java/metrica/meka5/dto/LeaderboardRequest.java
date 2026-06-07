@@ -6,16 +6,18 @@ public class LeaderboardRequest {
     private int score;
     private double time;
     private double wpm;
+    private double average;
     private boolean uppercase;
     private boolean punctuation;
     
-	public LeaderboardRequest(String username, int score, double time, double wpm, boolean uppercase,
+	public LeaderboardRequest(String username, int score, double time, double wpm,double average, boolean uppercase,
 			boolean punctuation) {
 		super();
 		this.Username = username;
 		this.score = score;
 		this.time = time;
 		this.wpm = wpm;
+		this.average = average;
 		this.uppercase = uppercase;
 		this.punctuation = punctuation;
 	}
@@ -45,6 +47,12 @@ public class LeaderboardRequest {
 	}
 	public void setWpm(double wpm) {
 		this.wpm = wpm;
+	}
+	public double getAverage() {
+		return average;
+	}
+	public void setAverage(double average) {
+		this.average = average;
 	}
 	public boolean isUppercase() {
 		return uppercase;

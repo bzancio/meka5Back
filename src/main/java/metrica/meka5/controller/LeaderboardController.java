@@ -25,21 +25,9 @@ public class LeaderboardController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/level/{levelId}")
-    public ResponseEntity<List<Leaderboard>> getByLevelId (@PathVariable Long levelId) {
-        List<Leaderboard> response = leaderboardService.getLevelbyId(levelId);
-        return ResponseEntity.ok(response);
-    }
-
-    @GetMapping("/user/{levelId}")
-    public ResponseEntity<List<Leaderboard>> getTop10ByLevelID (@PathVariable Long levelId) {
-        List<Leaderboard> response = leaderboardService.getBestsLevelby(levelId);
-        return ResponseEntity.ok(response);
-    }
-
-    @GetMapping("/best")
-    public ResponseEntity<List<Leaderboard>> getByLevelAndUser(  @RequestParam Long levelId, @RequestParam Long userId) {
-        List<Leaderboard> response = leaderboardService.getByLevelAndUser(levelId,userId);
+    @GetMapping("/me")
+    public ResponseEntity<List<LeaderboardRequest>> getByLevelAndUser(@RequestParam String token) {
+        List<LeaderboardRequest> response = leaderboardService.getMyScoreboard(token);
         return ResponseEntity.ok(response);
     }
     

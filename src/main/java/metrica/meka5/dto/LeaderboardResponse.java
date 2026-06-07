@@ -21,7 +21,6 @@ public class LeaderboardResponse {
 	public LeaderboardResponse() {
 		super();
 	}
-	
 	public int getScore() {
 		return score;
 	}
