@@ -27,9 +27,6 @@ public class LeaderboardServiceImpl implements LeaderboardService{
 
     @Autowired
     private LevelRepository levelRepository;
-
-    @Autowired
-    private UserRepository userRepository;
     
     @Autowired
     private ActiveSessionRepository activeSessionRepository;
@@ -42,7 +39,8 @@ public class LeaderboardServiceImpl implements LeaderboardService{
         				l.getUser().getUsername(), 
         				l.getScore(), 
         				l.getTime(), 
-        				l.getWpm(), 
+        				l.getWpm(),
+        				(l.getTime()+l.getWpm())/2,
         				l.getLevel().isUppercase(), 
         				l.getLevel().isPunctuation()))
         		.sorted((l1,l2) -> Double.compare(
@@ -52,37 +50,6 @@ public class LeaderboardServiceImpl implements LeaderboardService{
         		.collect(Collectors.toList());
     }
 
-    @Override
-    public Leaderboard saveScoreboard(Leaderboard leaderboard) {
-        return leaderboardRepository.save(leaderboard);
-    }
-
-    @Override
-    public List<Leaderboard> getLevelbyId(Long levelId) {
-        if (!levelRepository.existsById(levelId)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Level not found");
-        }
-        return leaderboardRepository.findByLevel_IdOrderByScoreDescTimeAsc(levelId);
-    }
-
-    @Override
-    public List<Leaderboard> getBestsLevelby(Long levelId) {
-        if (!levelRepository.existsById(levelId)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Level not found");
-        }
-        return leaderboardRepository.findTop10ByLevel_IdOrderByScoreDescTimeAsc(levelId);
-    }
-
-    @Override
-    public List<Leaderboard> getByLevelAndUser(Long levelId, Long userId) {
-        if (!levelRepository.existsById(levelId)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Level not found");
-        }
-        if (!userRepository.existsById(userId)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
-        }
-        return leaderboardRepository.findByUser_IdAndLevel_IdOrderByScoreDescTimeAsc(userId,levelId);
-    }
 
 	@Override
 	@Transactional
@@ -93,5 +60,28 @@ public class LeaderboardServiceImpl implements LeaderboardService{
 
 		Leaderboard leaderboard = new Leaderboard(leaderboardResponse.getScore(), leaderboardResponse.getTime(), leaderboardResponse.getWpm(), usuario, level);
 		return leaderboardRepository.save(leaderboard);
+	}
+
+
+	@Override
+	public List<LeaderboardRequest> getMyScoreboard(String token) {
+		
+		User usuario = activeSessionRepository.findUserByTokenSession(token).orElseThrow(() -> new RuntimeException("Sesion no valida o expirada"));
+		List<Leaderboard> leaderboard = leaderboardRepository.findAll();
+        return leaderboard.stream()
+        		.filter(l -> l.getUser().getId().equals(usuario.getId()))
+        		.map(l -> new LeaderboardRequest(
+        				l.getUser().getUsername(), 
+        				l.getScore(), 
+        				l.getTime(), 
+        				l.getWpm(), 
+        				(l.getTime()+l.getWpm())/2,
+        				l.getLevel().isUppercase(), 
+        				l.getLevel().isPunctuation()))
+        		.sorted((l1,l2) -> Double.compare(
+        				((l2.getScore()+l2.getWpm())/2),
+        				((l1.getScore()+l1.getWpm())/2)))
+        		.limit(50)
+        		.collect(Collectors.toList());
 	}
 }

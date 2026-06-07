@@ -11,9 +11,6 @@ import java.util.List;
 @Service
 public interface LeaderboardService{
     List<LeaderboardRequest> getScoreboard();
-    Leaderboard saveScoreboard(Leaderboard leaderboard);
-    List<Leaderboard> getLevelbyId(Long levelId);
-    List<Leaderboard> getBestsLevelby(Long levelId);
-    List<Leaderboard> getByLevelAndUser(Long levelId, Long userId);
+    List<LeaderboardRequest> getMyScoreboard(String token);    
     Leaderboard saveScore(LeaderboardResponse leaderboardResponse);
 }
