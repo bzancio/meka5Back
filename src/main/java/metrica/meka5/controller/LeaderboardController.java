@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -43,10 +44,8 @@ public class LeaderboardController {
     }
     
     @PostMapping("/register")
-    public ResponseEntity<Leaderboard> registerScore(@RequestBody LeaderboardResponse leaderboarResponse) {
-        Leaderboard response = leaderboardService.saveScore(leaderboarResponse);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    public ResponseEntity<Object> registerScore(@RequestBody LeaderboardResponse leaderboarResponse) {
+        leaderboardService.saveScore(leaderboarResponse);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new Object());
     }
-    
-    
 }
