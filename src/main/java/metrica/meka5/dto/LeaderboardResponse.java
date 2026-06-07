@@ -18,6 +18,9 @@ public class LeaderboardResponse {
 		this.uppercase = uppercase;
 		this.punctuation = punctuation;
 	}
+	public LeaderboardResponse() {
+		super();
+	}
 	
 	public int getScore() {
 		return score;
